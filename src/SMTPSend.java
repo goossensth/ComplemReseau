@@ -6,15 +6,25 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+
 public class SMTPSend {
-    public static void main(String[] args) {
+    public String exp ;
+    public String destination ;
+    public String subject;
+    public String text ;
+    public Properties prop;
+
+    public SMTPSend(String exp, String destination, String object, String text) {
+        this.exp = exp;
+        this.destination = destination;
+        this.subject = object;
+        this.text = text;
+        this.prop = System.getProperties();
+        prop.put("mail.smtp.host", "u2.tech.hepl.local");
+    }
+
+    public  void send() {
         try {
-            String exp = "goossensth@u2.tech.hepl.local";
-            String destination = "goossensth@u2.tech.hepl.local";
-            String subject = "Essai mail";
-            String text = "Bonjour, j'essaie d'envoyer un mail";
-            Properties prop = System.getProperties();
-            prop.put("mail.smtp.host", "u2.tech.hepl.local");
             Session sess = Session.getDefaultInstance(prop, null);
 
             MimeMessage msg = new MimeMessage(sess);
