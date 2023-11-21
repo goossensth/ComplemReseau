@@ -7,42 +7,24 @@ import java.util.Arrays;
 import java.util.Properties;
 
 public class POP3Rcv {
-    static String host ="u2.tech.hepl.local";
-    private  String user;
-    private String pass ;
-
-    public POP3Rcv(String user, String pass){
-        this.user = user;
-        this.pass = pass;
+    private Client_GUI gui;
+    public POP3Rcv(Client_GUI gui){
+        this.gui = gui;
     }
-    DefaultTableModel receive() {
+    DefaultTableModel receive(Folder folder) {
         try {
-            Properties prop = System.getProperties();
-            prop.put("mail.pop3.host", host);
-            prop.put("mail.disable.top", true);
-            Session sess = Session.getDefaultInstance(prop, null);
-
-
-            Store st = sess.getStore("pop3");
-            st.connect(host, user, pass);
-            Folder f = st.getFolder("INBOX");
-            f.open(Folder.READ_ONLY);
-
-            Message msg[] = f.getMessages();
-            System.out.println(f.getMessageCount() + "  mails.");
-            System.out.println(f.getNewMessageCount() + " nouveaux mails.");
+            Message msg[] = folder.getMessages();
 
             DefaultTableModel tbm = new DefaultTableModel(new String[]{"From", "Object", "Text"}, 0);
 
-            for(int m = 0; m< msg.length; m++){
-                if(msg[m].isMimeType("text/plain")){
-                    String[] message = {Arrays.toString(msg[m].getFrom()), msg[m].getSubject(), (String) msg[m].getContent()};
+            for (Message value : msg) {
+                if (value.isMimeType("text/plain")) {
+                    String[] message = {Arrays.toString(value.getFrom()), value.getSubject(), (String) value.getContent()};
                     tbm.addRow(message);
                 }
             }
+            gui.setModel(tbm);
             return tbm;
-
-
         } catch (MessagingException | IOException e) {
             throw new RuntimeException(e);
         }
