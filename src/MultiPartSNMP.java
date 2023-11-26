@@ -29,11 +29,12 @@ public class MultiPartSNMP {
 
             MimeMessage msg = new MimeMessage(sess);
 
-
+            //Définis les paramètres généraux du message
             msg.setFrom(new InternetAddress(exp));
             msg.setRecipient(Message.RecipientType.TO, new InternetAddress(destination));
             msg.setSubject(subject);
 
+            //Crée le multipart
             Multipart multiPt = new MimeMultipart();
 
             MimeBodyPart bodyPart = new MimeBodyPart();
@@ -43,7 +44,7 @@ public class MultiPartSNMP {
             String linkToPart = "/Users/thomas/IdeaProjects/Application_Mail_Java/8687v0.jpg";
             DataSource source = new FileDataSource(linkToPart);
             bodyPart.setDataHandler(new DataHandler(source));
-            bodyPart.setFileName(linkToPart);
+            bodyPart.setFileName("attachedPart");
 
             msg.setContent(multiPt);
             System.out.println("Envoi du mail");

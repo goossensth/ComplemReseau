@@ -1,9 +1,9 @@
 import javax.mail.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class POP3Client extends Thread{
@@ -14,9 +14,11 @@ public class POP3Client extends Thread{
     private Store store;
     private int message_count = 0;
 
-    private static Client_GUI clientGui;
+    private static POP3_Client clientGui;
     private  Folder folder;
-    POP3Client(Client_GUI gui) throws MessagingException {
+
+
+    POP3Client(POP3_Client gui) throws MessagingException {
         clientGui = gui;
         prop = System.getProperties();
         prop.put("mail.pop3.host", host);
@@ -24,7 +26,6 @@ public class POP3Client extends Thread{
         sess = Session.getDefaultInstance(prop, null);
         store = sess.getStore("pop3");
         clientGui.GetButtonConnect().addActionListener(new ConnectListener(){});
-
     }
     public void connect(String user, String pass) throws MessagingException {
         store.connect(host, user, pass);
@@ -51,9 +52,7 @@ public class POP3Client extends Thread{
                 Thread.sleep(5000);
             }
         }
-        catch (MessagingException | InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        catch (MessagingException | InterruptedException | IOException e) {
             throw new RuntimeException(e);
         }
     }

@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Mail_client {
+public class Mail_sender {
     private JPanel mainPanel;
     private JCheckBox checkBox;
     private JButton sendButton;
@@ -11,7 +11,7 @@ public class Mail_client {
     private JTextField objectField;
     private JTextArea textArea1;
 
-    public Mail_client() {
+    public Mail_sender() {
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -30,7 +30,7 @@ public class Mail_client {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Mail_client");
-        frame.setContentPane(new Mail_client().mainPanel);
+        frame.setContentPane(new Mail_sender().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

@@ -20,7 +20,9 @@ public class SMTPSend {
         this.subject = object;
         this.text = text;
         this.prop = System.getProperties();
-        prop.put("mail.smtp.host", "u2.tech.hepl.local");
+        String host = "u2.tech.hepl.local";
+        //String host = "smtp-relay.gmail.com:25";
+        prop.put("mail.smtp.host", host);
     }
 
     public  void send() {
