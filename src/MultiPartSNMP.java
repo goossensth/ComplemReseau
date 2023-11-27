@@ -6,6 +6,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.io.File;
 import java.util.Properties;
 
 public class MultiPartSNMP {
@@ -14,13 +15,16 @@ public class MultiPartSNMP {
     public String subject;
     public String text ;
     public Properties prop;
-    public MultiPartSNMP(String exp, String destination, String object, String text) {
+
+    private File fileToSend;
+    public MultiPartSNMP(String exp, String destination, String object, String text, File fts) {
         this.exp = exp;
         this.destination = destination;
         this.subject = object;
         this.text = text;
         this.prop = System.getProperties();
         prop.put("mail.smtp.host", "u2.tech.hepl.local");
+        fileToSend = fts;
     }
 
     public  void send() {
@@ -41,10 +45,10 @@ public class MultiPartSNMP {
             bodyPart.setText(text);
             multiPt.addBodyPart(bodyPart);
 
-            String linkToPart = "C:/Users/benja/ProjetCompReseau/ComplemReseau/8687v0.jpg";
-            DataSource source = new FileDataSource(linkToPart);
+            //String linkToPart = "C:/Users/benja/ProjetCompReseau/ComplemReseau/8687v0.jpg";
+            DataSource source = new FileDataSource(fileToSend);
             bodyPart.setDataHandler(new DataHandler(source));
-            bodyPart.setFileName("attachedPart.jpg");
+            bodyPart.setFileName(fileToSend.getName());
 
             msg.setContent(multiPt);
             System.out.println("Envoi du mail");

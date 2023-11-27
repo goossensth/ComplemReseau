@@ -1,7 +1,9 @@
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public class POP3_Client {
         this.msgList = msgList;
     }
 
+    public JTree getMailTree(){return mailTree;}
+
     private List<Message> msgList;
 
     private POP3Rcv receiver;
@@ -50,12 +54,30 @@ public class POP3_Client {
         tableMails.setModel(tbm);
 
         msgList = new ArrayList<>();
+
         mailChoose.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent)
             {
+                TreeExample();
             }
         });
+    }
+
+
+    public void TreeExample()
+    {
+        //create the root node
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
+        //create the child nodes
+        DefaultMutableTreeNode vegetableNode = new DefaultMutableTreeNode("test1");
+        DefaultMutableTreeNode fruitNode = new DefaultMutableTreeNode("Test2");
+        //add the child nodes to the root node
+        root.add(vegetableNode);
+        root.add(fruitNode);
+
+        //create the tree by passing in the root node
+        mailTree = new JTree(root);
     }
 
 

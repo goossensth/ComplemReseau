@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class Mail_sender {
     private JPanel mainPanel;
@@ -10,19 +11,37 @@ public class Mail_sender {
     private JTextField toField;
     private JTextField objectField;
     private JTextArea textArea1;
+    private JButton button1;
+
+    private File fileToSend;
 
     public Mail_sender() {
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if(checkBox.isSelected()){
-                    MultiPartSNMP mail = new MultiPartSNMP(fromField.getText(), toField.getText(), objectField.getText(), textArea1.getText());
+                    MultiPartSNMP mail = new MultiPartSNMP(fromField.getText(), toField.getText(), objectField.getText(), textArea1.getText(), fileToSend);
                     mail.send();
                 }
                 else{
                     SMTPSend mail = new SMTPSend(fromField.getText(), toField.getText(), objectField.getText(), textArea1.getText());
                     mail.send();
                 }
+
+            }
+        });
+        button1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    JFileChooser fc = new JFileChooser();
+                    int returnVal = fc.showOpenDialog(null);
+
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        fileToSend = fc.getSelectedFile();
+                        //This is where a real application would open the file.
+
+                    } else {
+                    }
 
             }
         });
