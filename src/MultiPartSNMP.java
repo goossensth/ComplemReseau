@@ -41,10 +41,10 @@ public class MultiPartSNMP {
             bodyPart.setText(text);
             multiPt.addBodyPart(bodyPart);
 
-            String linkToPart = "/Users/thomas/IdeaProjects/Application_Mail_Java/8687v0.jpg";
+            String linkToPart = "C:/Users/benja/ProjetCompReseau/ComplemReseau/8687v0.jpg";
             DataSource source = new FileDataSource(linkToPart);
             bodyPart.setDataHandler(new DataHandler(source));
-            bodyPart.setFileName("attachedPart");
+            bodyPart.setFileName("attachedPart.jpg");
 
             msg.setContent(multiPt);
             System.out.println("Envoi du mail");

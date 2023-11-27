@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class POP3_Client {
@@ -15,27 +16,45 @@ public class POP3_Client {
     private JTabbedPane tabbedPane1;
     private JComboBox<String> mailChoose;
     private JTree mailTree;
-    public List<Message> msgList;
+
+    public List<Message> getMsgList()
+    {
+
+        return msgList;
+    }
+
+    public void setMsgList(List<Message> msgList) {
+        this.msgList = msgList;
+    }
+
+    private List<Message> msgList;
 
     private POP3Rcv receiver;
 
     public static void main(String[] args) throws MessagingException {
+
         POP3_Client gui = new POP3_Client();
         JFrame frame = new JFrame("Pop3_Client");
         frame.setContentPane(gui.mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
         frame.setSize(600,500);
         new POP3Client(gui);
     }
-    public POP3_Client() {
+    public POP3_Client()
+    {
+
         DefaultTableModel tbm = new DefaultTableModel(new String[]{"From", "Object", "Text"}, 0);
         tableMails.setModel(tbm);
+
+        msgList = new ArrayList<>();
         mailChoose.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                            }
+            public void actionPerformed(ActionEvent actionEvent)
+            {
+            }
         });
     }
 

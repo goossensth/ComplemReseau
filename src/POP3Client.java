@@ -1,4 +1,5 @@
 import javax.mail.*;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -6,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class POP3Client extends Thread{
+public class POP3Client extends Thread
+{
     static String host ="u2.tech.hepl.local";
 
     private Properties prop;
@@ -36,7 +38,8 @@ public class POP3Client extends Thread{
     }
     public  void run(){
         try{
-            while(true) {
+            while(true)
+            {
                 System.out.println("Checking for update");
                 folder = store.getFolder("INBOX");
                 folder.open(Folder.READ_ONLY);
@@ -44,15 +47,19 @@ public class POP3Client extends Thread{
                 if(new_message_count > message_count) {
                     System.out.println("Message count" + message_count);
                     if(message_count!=0){
-                        Runtime.getRuntime().exec(new String[] { "osascript", "-e", "display notification \"Vous avez des nouveaux messages\" with title \"POP3 Client\"" });
+                        //Runtime.getRuntime().exec(new String[] { "osascript", "-e", "display notification \"Vous avez des nouveaux messages\" with title \"POP3 Client\"" });
+                        JOptionPane.showMessageDialog(null, "Vous avez recu un mail");
                     }
                     message_count = new_message_count;
                     new POP3Rcv(clientGui).receive(folder);
                 }
+
                 Thread.sleep(5000);
+                folder.close();
             }
+
         }
-        catch (MessagingException | InterruptedException | IOException e) {
+        catch (MessagingException | InterruptedException  e) {
             throw new RuntimeException(e);
         }
     }

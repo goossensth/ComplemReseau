@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class POP3Rcv {
@@ -15,11 +16,13 @@ public class POP3Rcv {
         try {
             Message msg[] = folder.getMessages();
 
+
+
             DefaultTableModel tbm = new DefaultTableModel(new String[]{"From", "Object", "Text"}, 0);
 
             for (Message value : msg) {
                 Object content = value.getContent();
-                gui.msgList.add(value);
+                gui.getMsgList().add(value);
                 if (content instanceof String) {
                     String[] message = {Arrays.toString(value.getFrom()), value.getSubject(), (String) value.getContent()};
                     tbm.addRow(message);
@@ -42,11 +45,12 @@ public class POP3Rcv {
                             InputStream is = p.getInputStream();
                             ByteArrayOutputStream baos = new ByteArrayOutputStream();
                             int c;
-                            while((c=is.read()) != 1) baos.write(c);
+                            while((c=is.read()) != -1) baos.write(c);
                             baos.flush();
-                            String nf = p.getFileName();
+                            String nf =  p.getFileName();
                             FileOutputStream fos = new FileOutputStream(nf);
-                            baos.writeTo(fos);fos.close();
+                            baos.writeTo(fos);
+                            fos.close();
                             String[] message = {Arrays.toString(value.getFrom()), value.getSubject(), text};
                             tbm.addRow(message);
                             System.out.println("Attached part " + nf);
@@ -56,6 +60,7 @@ public class POP3Rcv {
                 }
             }
             gui.setModel(tbm);
+
         } catch (MessagingException | IOException e) {
             throw new RuntimeException(e);
         }
