@@ -50,7 +50,7 @@ public class POP3_Client {
     public POP3_Client()
     {
 
-        DefaultTableModel tbm = new DefaultTableModel(new String[]{"From", "Object", "Text"}, 0);
+        DefaultTableModel tbm = new DefaultTableModel(new String[]{"From", "Object", "Text","image"}, 0);
         tableMails.setModel(tbm);
 
         msgList = new ArrayList<>();

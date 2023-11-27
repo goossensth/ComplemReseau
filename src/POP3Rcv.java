@@ -18,12 +18,14 @@ public class POP3Rcv {
 
 
 
-            DefaultTableModel tbm = new DefaultTableModel(new String[]{"From", "Object", "Text"}, 0);
+            DefaultTableModel tbm = new DefaultTableModel(new String[]{"From", "Object", "Text","image"}, 0);
 
-            for (Message value : msg) {
+            for (Message value : msg)
+            {
                 Object content = value.getContent();
                 gui.getMsgList().add(value);
-                if (content instanceof String) {
+                if (content instanceof String)
+                {
                     String[] message = {Arrays.toString(value.getFrom()), value.getSubject(), (String) value.getContent()};
                     tbm.addRow(message);
                     gui.GetCombo().addItem(value.getSubject());
@@ -36,12 +38,15 @@ public class POP3Rcv {
                     for(int j = 0; j <partNb; j++){
                         Part p = msgMp.getBodyPart(j);
                         String d = p.getDisposition();
-                        if(p.isMimeType("text/plain")){
+                        if(p.isMimeType("text/plain"))
+                        {
+                            System.out.println("salut");
                             System.out.println(p.getContent());
                             text = (String) p.getContent();
                         }
 
-                        if(d!=null && d.equalsIgnoreCase(Part.ATTACHMENT)){
+                        if(d!=null && d.equalsIgnoreCase(Part.ATTACHMENT))
+                        {
                             InputStream is = p.getInputStream();
                             ByteArrayOutputStream baos = new ByteArrayOutputStream();
                             int c;
@@ -51,7 +56,7 @@ public class POP3Rcv {
                             FileOutputStream fos = new FileOutputStream(nf);
                             baos.writeTo(fos);
                             fos.close();
-                            String[] message = {Arrays.toString(value.getFrom()), value.getSubject(), text};
+                            String[] message = {Arrays.toString(value.getFrom()), value.getSubject(), text,nf};
                             tbm.addRow(message);
                             System.out.println("Attached part " + nf);
 

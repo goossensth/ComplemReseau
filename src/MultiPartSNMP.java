@@ -6,6 +6,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.swing.*;
 import java.io.File;
 import java.util.Properties;
 
@@ -44,16 +45,19 @@ public class MultiPartSNMP {
             MimeBodyPart bodyPart = new MimeBodyPart();
             bodyPart.setText(text);
             multiPt.addBodyPart(bodyPart);
+            bodyPart = new MimeBodyPart();
 
             //String linkToPart = "C:/Users/benja/ProjetCompReseau/ComplemReseau/8687v0.jpg";
             DataSource source = new FileDataSource(fileToSend);
             bodyPart.setDataHandler(new DataHandler(source));
             bodyPart.setFileName(fileToSend.getName());
+            multiPt.addBodyPart(bodyPart);
 
             msg.setContent(multiPt);
             System.out.println("Envoi du mail");
             Transport.send(msg);
             System.out.println("Message envoyé à " + destination);
+
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);
